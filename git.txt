@@ -1,0 +1,25 @@
+git clone https://github.com/natanisaitejasswini/MEAN_FunStore
+
+- follow the "add remote origin" steps if need be
+	- now you have a local copy to work with
+git checkout -b development_branch_name
+- let everyone know on slack which files you are
+going to work on! Then you can work on them!
+- git add, git commit all the time!
+
+BEFORE MERGING:
+- git add . (to your production branch)
+- git commit -m "description of what you worked on"
+
+MERGE TO MASTER:
+- git checkout master
+- git pull origin master (fast-forward hopefully!)
+- git merge development_branch_name
+- resolve conflicts
+- if conflicts, git commit
+- git push origin master (fast-forward hopefully!)
+- delete working branch (git branch -D development_branch_name)
+start working again!
+- git checkout master
+- git pull origin master
+- git checkout -b new_dev_branch

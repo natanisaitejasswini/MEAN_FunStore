@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MEAN_EStore</title>
+	<meta  name='google-signin-client_id' content='129903945144-jjlo2kdi5fpv8b15m8b6dhbjkcpfndls.apps.googleusercontent.com'>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" >
+	<link rel="stylesheet" type="text/css" href="static/stylesheets/style.css">
+	 <link rel="icon" href="assets/static/icon/favicon.ico">
+    <script src='angular/angular.js' charset= "utf-8"></script>
+  	<script src='angular-route/angular-route.js' charset= "utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+
+
+	<!-- Scripts Tags Including factories and controllers -->
+  	<script src="assets/app.js" charset="utf-8"></script>
+    <script type="text/javascript">
+
+    $(document).ready(function(){
+  		$('#loginBox').hide()
+  		changeBg()
+  		setInterval(changeBg, 8000)
+
+
+		$('#loginBtn').click(function(){
+			$('#wrapper').hide()
+			$('#loginBox').show()
+		})
+		$('.btnBox').click(function(){
+			$('#wrapper').hide()
+			$('#loginBox').show()
+		})
+		$('#x').click(function(){
+			$('#wrapper').show()
+			$('#loginBox').hide()
+
+		})
+
+		function onSignIn(googleUser) {
+		  var profile = googleUser.getBasicProfile();
+		  console.log('ID: ' + id_token); // Do not send to your backend! Use an ID token instead.
+		  console.log('Name: ' + profile.getName());
+		  console.log('Image URL: ' + profile.getImageUrl());
+		  console.log('Email: ' + profile.getEmail());
+
+		  // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+    }
+
+
+
+    $('#fbLogin').click(function(){
+    			FB.login(function(response){
+    				if(response.status==='connected'){
+    					FB.api('/me', 'GET', {fields: 'last_name,first_name, email, picture.width(300).height(300)'}, function(response) {
+    						$('#first_name').val(response.first_name)
+    						$('#last_name').val(response.last_name)
+    						$('#email').val(response.email)
+    						$('#picture').val(response.picture.data.url)
+    						$('#id').val(response.id)
+    						var data = {
+    							first_name : $('#first_name').val(),
+    							last_name : $('#last_name').val(),
+    							email : $('#email').val(),
+    							picture: $('#picture').val(),
+    							fbid : $('#id').val()
+    						}
+    						$.ajax({
+    							url: "/login",
+    							type: "POST",
+    							data: JSON.stringify(data),
+    							contentType: "application/json",
+    							success: function(output) {
+    								if(output.status === 'success') {
+    									$(location).attr('href','/');
+    								}
+    							}
+    						});
+    					});
+    				}
+    			}, {scope: 'email'})
+    		})
+      })
+    </script>
+  <!-- ************************************************************************************************ -->
+</head>
+<body>
+	<script>
+		window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : '1275412172478743',
+	      xfbml      : true,
+	      version    : 'v2.7'
+	    });
+		};
+		(function(d, s, id){
+		 var js, fjs = d.getElementsByTagName(s)[0];
+		 if (d.getElementById(id)) {return;}
+		 js = d.createElement(s); js.id = id;
+		 js.src = "//connect.facebook.net/en_US/sdk.js";
+		 fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+
+</script>
+<!-- ***************************************HTML********************************************************* -->
+
+</script>
+	<div id='loginBox'>
+	<div id='x'>X</div><br>
+	<button id='fbLogin' class='logBtns'>Login with facebook</button>
+	<button class="logBtns" id='gLogin' >Sign in with Google</button></div>
+	</div>
+	<div id='wrapper'>
+		<div id='header'>
+			Welcome to Subperb.
+			<button class='btn' id='loginBtn'>Login in here.</button>
+		</div>
+			<div id='boxWrap'>
+				<div class='joinBox'>
+						<p>Join a team today! All sports, any kind.</p><br>
+						<button class='btnBox'>Find a team!</button>
+				</div>
+				<div class='joinBox'>
+					<p>Looking for a replacement for a player on your team?
+					Start here.</p>
+					<button class='btnBox'>Find a sub!</button>
+				</div>
+			</div>
+			<form>
+				<input type='hidden' id='first_name' name='first_name'>
+				<input type='hidden' id='last_name' name='last_name'>
+				<input type='hidden' id = 'email' name = 'email'>
+				<input type='hidden' id = 'picture' name = 'picture'>
+				<input type='hidden' id='id' name='id'>
+			</form>
+	</div>
+</body>
+</html>
