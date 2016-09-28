@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app= "app">
+<head>
+	<title>MEAN_EStore</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" >
+
+	<link rel="stylesheet" type="text/css" href="static/stylesheets/style.css">
+	 <link rel="icon" href="assets/static/icon/favicon.ico">
+    <script src='angular/angular.js' charset= "utf-8"></script>
+  	<script src='angular-route/angular-route.js' charset= "utf-8"></script>
+
+	<!-- Scripts Tags Including factories and controllers -->
+  	<script src="assets/app.js" charset="utf-8"></script>
+	
+	<!-- adding in factory files -->
+	<script  src='assets/factories/usersFactory.js'></script>
+	<script  src='assets/factories/productFactory.js'></script>
+	<script  src='assets/factories/cartFactory.js'></script>
+
+	<!-- adding in controller files -->
+	<script src='assets/controllers/loginRegController.js'></script>
+	<script src='assets/controllers/productController.js'></script>
+	<script src='assets/controllers/ShowProdController.js'></script>
+	<script src='assets/controllers/listController.js'></script>
+	<script src='assets/controllers/showCartController.js'></script>
+	
+</head>
+<body>
+	
+	<div class="container">
+		<div class="header">
+			<h2>Fun MEAN Store</h2>
+		</div>
+		<div ng-view=""></div>
+	</div>
+
+</body>
+</html>
